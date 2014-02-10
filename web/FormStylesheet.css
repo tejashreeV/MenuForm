@@ -90,25 +90,25 @@
                 background-color: #4EB1BA;
             }
             
-            #FacilityTable{
+            #Tables{
                 color:#f9f9f9;
             }
             
-            #txtboxes{
-                background: white;
+/*            .textboxes{
                 text-align: center;
                 color: #666; 
                 outline: none; 
                 height:23px; 
-                width: 275px; 
+                width: 225px; 
             }
-            #txtboxes:hover{
+            .textboxes:hover{
                 border-radius: 5px;
+                text-align: center;
                 border: 1px solid #4EB1BA;
                 box-shadow: 0 0 5px 3px #4EB1BA; 
-            }
-            
-            #c1{
+            }*/
+
+/*            #c1{
                 display: none;
             }
             #c1 + label{                    
@@ -122,7 +122,7 @@
             }
             #c1:checked + label{
                 background: url(http://html-generator.weebly.com/files/theme/checkboxb.png) -19px top no-repeat;
-            }
+            }*/
 
             #btn {
                 background-image: -webkit-linear-gradient(top, rgba(78,177,186,1) 0%,rgba(74,156,163,1) 72%);
@@ -136,10 +136,10 @@
                 border: solid 2px rgba(42,186,199,1);
                 -webkit-border-radius: 13px;
                 -moz-border-radius: 13px;
-                border-radius: 13px;
+                border-radius: 6px;
                 width: 83px;
                 height: 21px;
-                padding: 2px;
+                padding: 1px;
                 display: inline;
                 font-family: GentiumBookBasicItalic, Arial, sans-serif;
                 text-align: center;

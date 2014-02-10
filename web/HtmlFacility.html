@@ -10,26 +10,80 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" type="text/css" href="FormStylesheet.css">
+        <SCRIPT language="javascript">
+        var tableID;
+        function addRow(tableID) {           
+                                   
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+            row.className="c1";
+            row.className="textboxes";
+            
+            var cell1 = row.insertCell(0);
+            var element1 = document.createElement("input");            
+            element1.type  = "checkbox";
+            element1.name= "chkbox[0]";
+            element1.id="chkbox[0]";
+            cell1.appendChild(element1);
+                                   
+            var cell2 = row.insertCell(1);
+            var element2 = document.createElement("input");            
+            element2.type  = "text";
+            element2.value="";
+            element2.id = "textbox[0]";
+            element2.name = "textbox[0]";
+            cell2.appendChild(element2);
+                       
+            var cell3 = row.insertCell(2);
+            var element3 = document.createElement("input");            
+            element3.type  = "text";
+            element3.value="";
+            element3.id = "textbox[1]";
+            element3.name = "textbox[1]";
+            cell3.appendChild(element3);
+        }        
+            
+        function deleteRow(tableID){
+            try{
+                var table=document.getElementById(tableID);
+                var rowCount=table.rows.length;
+                
+                for(var i=0;i<rowCount;i++){
+                    var row=table.rows[i];
+                    var chkbox=row.cells[0].childNodes[0];
+                    if(chkbox!==null && chkbox.checked===true){
+                        table.deleteRow(i);
+                        rowCount--;
+                        i--;
+                    }
+                }
+            }
+            catch(e){
+                alert(e);
+            }
+        }
+    </script>
     </head>
     <body>
         <h1 id="EmphasiedText">FACILITY</h1>
-        <form>
+        <form method="POST" action="ServletFacilities">
             <br><br><br><br>
-            <table align="center" id="FacilityTable">
+            <table align="center" id="Tables">
                 <tr>
                     <th>TICK</th>
                     <th>FACILITY NO.</th>
                     <th>FACILITY NAME</th>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="c1" name="cc" >  
-                    <label for="c1"><span></span></label></td>
-                    <td><input id="txtboxes" type="text" name='facno'></td>
-                    <td><input id="txtboxes" type="text" name='facname'></td>
+                    <td><input type="checkbox" id="chkbox[0]" name="chkbox[0]" >  
+                    <label for="chkbox[0]"><span></span></label></td>
+                    <td><input  id="textbox[0]" type="text" name='textbox[0]'></td>
+                    <td><input  id="textbox[1]" type="text" name='textbox[1]'></td>
                 </tr>                
             </table><br><br><br><br><br><br>
-            <input type="button" id="btn" value="ADD" name="s1">
-            <input type="button" id="btn" value="DELETE" name="s1">
+            <input type="button" id="btn" value="ADD" name="s1" onclick="addRow('Tables');"/>
+            <input type="button" id="btn" value="DELETE" name="s1" onclick="deleteRow('Tables');"/>
             <input type="submit" id="btn" value="SAVE" name="s1">
             <input type="submit" id="btn" value="DISPLAY" name="s1">
             <input type="reset" id="btn" value="RESET" name="s1">
