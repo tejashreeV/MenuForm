@@ -63,11 +63,24 @@ and open the template in the editor.
                 alert(e);
             }
         }
+        
+        function deleteMaterial(){
+            var delMat=prompt("Enter Material Name");
+            document.form.dmat.value=delMat;
+        }
+        
+        function updateMaterial(){
+            var upMat=prompt("Enter Material Number");
+            document.form.umatno.value=upMat;
+            
+            var upMatName=prompt("Upate Material Name To");
+            document.form.umatname.value=upMatName;
+        }
     </script>
     </head>
     <body>
         <h1 id="EmphasiedText">MATERIALS</h1>
-        <form  method="POST" action="ServletMaterials">
+        <form  method="POST" action="ServletMaterials" name="form">
             <br><br><br><br>
             <table align="center" id="Tables">
                 <tr>
@@ -82,11 +95,19 @@ and open the template in the editor.
                     <td><input id="textbox[1]" type="text" name='textbox[1]'></td>
                 </tr>                
             </table><br><br><br><br><br><br>
-            <input type="button" id="btn" value="ADD" name="s1" onclick="addRow('Tables');"/>
-            <input type="button" id="btn" value="DELETE" name="s1" onclick="deleteRow('Tables');"/>
+            <input type="button" id="btn" value="ADD ROW" name="s1" onclick="addRow('Tables');"/>
+            <input type="button" id="btn" value="DELETE ROW" name="s1" onclick="deleteRow('Tables');"/>
             <input type="submit" id="btn" value="SAVE" name="s1">
             <input type="submit" id="btn" value="DISPLAY" name="s1">
             <input type="reset" id="btn" value="RESET" name="s1">
+            <br><br><br><br>
+            <input type="submit" id="btn" value="DELETE" name="s1" onclick="deleteMaterial();"/>
+            <input type="submit" id="btn" value="UPDATE" name="s1" onclick="updateMaterial();"/>
+            
+            <!--HIDDEN FORM FIELDS -->
+            <input type="hidden" name="dmat">
+            <input type="hidden" name="umatno">
+            <input type="hidden" name="umatname">
         </form>
     </body>
 </html>

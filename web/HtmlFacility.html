@@ -63,11 +63,24 @@ and open the template in the editor.
                 alert(e);
             }
         }
+        
+        function deleteFacility(){
+            var delFac=prompt("Enter Facility Name");
+            document.form.dfac.value=delFac;
+        }
+        
+        function updateFacility(){
+            var upFac=prompt("Enter Facility Number");
+            document.form.ufacno.value=upFac;
+            
+            var upFacName=prompt("Upate Facility Name To");
+            document.form.ufacname.value=upFacName;
+        }
     </script>
     </head>
     <body>
         <h1 id="EmphasiedText">FACILITY</h1>
-        <form method="POST" action="ServletFacilities">
+        <form method="POST" action="ServletFacilities" name="form">
             <br><br><br><br>
             <table align="center" id="Tables">
                 <tr>
@@ -82,11 +95,19 @@ and open the template in the editor.
                     <td><input  id="textbox[1]" type="text" name='textbox[1]'></td>
                 </tr>                
             </table><br><br><br><br><br><br>
-            <input type="button" id="btn" value="ADD" name="s1" onclick="addRow('Tables');"/>
-            <input type="button" id="btn" value="DELETE" name="s1" onclick="deleteRow('Tables');"/>
+            <input type="button" id="btn" value="ADD ROW" name="s1" onclick="addRow('Tables');"/>
+            <input type="button" id="btn" value="DELETE ROW" name="s1" onclick="deleteRow('Tables');"/>
             <input type="submit" id="btn" value="SAVE" name="s1">
             <input type="submit" id="btn" value="DISPLAY" name="s1">
             <input type="reset" id="btn" value="RESET" name="s1">
+            <br><br><br><br>
+            <input type="submit" id="btn" value="DELETE" name="s1" onclick="deleteFacility();"/>
+            <input type="submit" id="btn" value="UPDATE" name="s1" onclick="updateFacility();"/>
+            
+            <!--HIDDEN FORM FIELDS -->
+            <input type="hidden" name="dfac">
+            <input type="hidden" name="ufacno">
+            <input type="hidden" name="ufacname">
         </form>
     </body>
 </html>

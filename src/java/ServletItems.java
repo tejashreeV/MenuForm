@@ -34,9 +34,15 @@ public class ServletItems extends HttpServlet {
             //GETTING INPUT FROM DYNAMIC ROWS
             String[] Chkbox=request.getParameterValues("chkbox[0]");
             String[] Item_no=request.getParameterValues("textbox[0]");
-            String[] Item_name=request.getParameterValues("textbox[1]");
+            String[] Item_name=request.getParameterValues("textbox[1]");  
             
-            String s2=request.getParameter("s1");            
+            //GETTING HIDDEN FORM FIELD VALUES
+            String DeleteItem=request.getParameter("ditem");
+            String UpdateItemNo=request.getParameter("uitemno");
+            String UpdateItemName=request.getParameter("uitemname");
+                        
+            String s2=request.getParameter("s1");  
+            
             if(s2.equals("SAVE") && Chkbox!=null){                
                 for(int i=0;i<Chkbox.length;i++){                
                     //st.executeUpdate("insert into Orders values('"+Item_no[i]+"','"+Item_desc[i]+"','"+Qty[i]+"','"+Rate[i]+"')");                                        
@@ -46,27 +52,35 @@ public class ServletItems extends HttpServlet {
                     pstmt.setString(2,Item_name[i]);                    
                     pstmt.executeUpdate();
                 }
-                out.println("<h1>Dynamic Records Inserted<h1>");
+                out.print("<script language='JavaScript'>alert('Records Inserted');</script>");
             }
+            
             if(s2.equals("DISPLAY")){
+                out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"FormStylesheet.css\">");
+                out.println("<h1 id=EmphasiedText>ITEMS TABLE</h1>");
                 ResultSet rs=st.executeQuery("select * from \"ItemTab\"");
-//                ResultSetMetaData rsmd=rs.getMetaData();
-//                int cols=rsmd.getColumnCount();
                 while(rs.next()){
                     int itemno=rs.getInt(1);
                     String itemname=rs.getString(2);                                        
-//                    for(int i=3;i<cols;i++){
-                        out.println("<table>"+"<tr>"+"<td>"+"<input type=checkbox>"+"</td>"+"<td>"+"<input type=text value='"+itemno+"'>"+"</td>"+"<td>"+"<input type=text value='"+itemname+"'>"+"</tr>");
+                        out.println("<table id=Tables align=center>"+"<tr>"+"<td>"+"<input type=checkbox>"+"</td>"+"<td>"+"<input type=text value='"+itemno+"'>"+"</td>"+"<td>"+"<input type=text value='"+itemname+"'>"+"</tr>");
                         out.println("</table>");
-//                    }
                 }
+                out.println("<br>"+"<br>"+"<br>");
+                out.println("<form>"+"<input type=submit id=btn value=UPDATE name=s2>");
+                out.println("<input type=submit id=btn value=DELETE name=s2>"+"</form>"); 
             }
             
-//            String s4=request.getParameter("s4");
-//            if(s3.equals("Delete")){               
-//               
-//            }
+            if(s2.equals("DELETE")){
+                String delQuery="delete from \"ItemTab\" where \"item_name\"='"+DeleteItem+"'";
+                st.executeUpdate(delQuery);
+                out.print("<script language='JavaScript'>alert('Facility Deleted');</script>");
+            }
             
+            if(s2.equals("UPDATE")){
+                String upQuery="update \"ItemTab\" set \"item_name\"='"+UpdateItemName+"' where \"item_no\"='"+UpdateItemNo+"'";
+                st.executeUpdate(upQuery);
+                out.print("<script language='JavaScript'>alert('Facility Table Updated');</script>");
+            }
             st.close();
             con.close();
         }

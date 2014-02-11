@@ -34,7 +34,12 @@ public class ServletFacilities extends HttpServlet {
             //GETTING INPUT FROM DYNAMIC ROWS
             String[] Chkbox=request.getParameterValues("chkbox[0]");
             String[] Facility_no=request.getParameterValues("textbox[0]");
-            String[] Facility_name=request.getParameterValues("textbox[1]");
+            String[] Facility_name=request.getParameterValues("textbox[1]"); 
+            
+            //GETTING HIDDEN FORM FIELD VALUES
+            String DeleteFac=request.getParameter("dfac");
+            String UpdateFacNo=request.getParameter("ufacno");
+            String UpdateFacName=request.getParameter("ufacname");
             
             String s2=request.getParameter("s1");            
             if(s2.equals("SAVE") && Chkbox!=null){                
@@ -46,31 +51,32 @@ public class ServletFacilities extends HttpServlet {
                     pstmt.setString(2,Facility_name[i]);                    
                     pstmt.executeUpdate();
                 }
-                out.println("<h1>Dynamic Records Inserted<h1>");
+                out.print("<script language='JavaScript'>alert('Records Inserted');</script>");
             }
+            
             if(s2.equals("DISPLAY")){
+                out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"FormStylesheet.css\">");
+                out.println("<h1 id=EmphasiedText>FACILITY TABLE</h1>");
                 ResultSet rs=st.executeQuery("select * from \"FacilityTab\"");
-//                ResultSetMetaData rsmd=rs.getMetaData();
-//                int cols=rsmd.getColumnCount();
                 while(rs.next()){
                     int facno=rs.getInt(1);
                     String facname=rs.getString(2);                                        
-//                    for(int i=3;i<cols;i++){
-                        out.println("<table>"+"<tr>"+"<td>"+"<input type=checkbox>"+"</td>"+"<td>"+"<input type=text value='"+facno+"'>"+"</td>"+"<td>"+"<input type=text value='"+facname+"'>"+"</tr>");
-                        out.println("</table>");
-//                    }
+                        out.println("<table id=Tables align=center>"+"<tr>"+"<td>"+"<input type=checkbox>"+"</td>"+"<td>"+"<input type=text value='"+facno+"'>"+"</td>"+"<td>"+"<input type=text value='"+facname+"'>"+"</tr>");
+                        out.println("</table>");                        
                 }
             }
             
-//            String s3=request.getParameter("s1");
-//            if(s3.equals("DELETE") && Chkbox!=null){
-//                for(int i=0;i<Chkbox.length;i++){
-//                    String chk_count=Chkbox[i];
-//                    PreparedStatement pstmt;
-//                    pstmt=con.prepareStatement("delete from \"FacilityTab\" where \"facility_no\"='chk_count'");
-//                    pstmt.executeUpdate();
-//                }
-//            }
+            if(s2.equals("DELETE")){
+                String delQuery="delete from \"FacilityTab\" where \"facility_name\"='"+DeleteFac+"'";
+                st.executeUpdate(delQuery);
+                out.print("<script language='JavaScript'>alert('Facility Deleted');</script>");
+            }
+            
+            if(s2.equals("UPDATE")){
+                String upQuery="update \"FacilityTab\" set \"facility_name\"='"+UpdateFacName+"' where \"facility_no\"='"+UpdateFacNo+"'";
+                st.executeUpdate(upQuery);
+                out.print("<script language='JavaScript'>alert('Facility Table Updated');</script>");
+            }
             
             st.close();
             con.close();

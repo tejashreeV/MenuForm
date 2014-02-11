@@ -36,7 +36,13 @@ public class ServletMaterials extends HttpServlet {
             String[] Material_no=request.getParameterValues("textbox[0]");
             String[] Material_name=request.getParameterValues("textbox[1]");
             
-            String s2=request.getParameter("s1");            
+            //GETTING HIDDEN FORM FIELD VALUES
+            String DeleteMat=request.getParameter("dmat");
+            String UpdateMatNo=request.getParameter("umatno");
+            String UpdateMatName=request.getParameter("umatname");
+            
+            String s2=request.getParameter("s1"); 
+            
             if(s2.equals("SAVE") && Chkbox!=null){                
                 for(int i=0;i<Chkbox.length;i++){                
                     //st.executeUpdate("insert into Orders values('"+Item_no[i]+"','"+Item_desc[i]+"','"+Qty[i]+"','"+Rate[i]+"')");                                        
@@ -46,26 +52,35 @@ public class ServletMaterials extends HttpServlet {
                     pstmt.setString(2,Material_name[i]);                    
                     pstmt.executeUpdate();
                 }
-                out.println("<h1>Dynamic Records Inserted<h1>");
+                out.print("<script language='JavaScript'>alert('Records Inserted');</script>");
             }
+            
             if(s2.equals("DISPLAY")){
+                out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"FormStylesheet.css\">");
+                out.println("<h1 id=EmphasiedText>MATERIALS TABLE</h1>");
                 ResultSet rs=st.executeQuery("select * from \"MaterialTab\"");
-//                ResultSetMetaData rsmd=rs.getMetaData();
-//                int cols=rsmd.getColumnCount();
                 while(rs.next()){
                     int matno=rs.getInt(1);
                     String matname=rs.getString(2);                                        
-//                    for(int i=3;i<cols;i++){
-                        out.println("<table>"+"<tr>"+"<td>"+"<input type=checkbox>"+"</td>"+"<td>"+"<input type=text value='"+matno+"'>"+"</td>"+"<td>"+"<input type=text value='"+matname+"'>"+"</tr>");
+                        out.println("<table id=Tables align=center>"+"<tr>"+"<td>"+"<input type=checkbox>"+"</td>"+"<td>"+"<input type=text value='"+matno+"'>"+"</td>"+"<td>"+"<input type=text value='"+matname+"'>"+"</tr>");
                         out.println("</table>");
-//                    }
                 }
+                out.println("<br>"+"<br>"+"<br>");
+                out.println("<form>"+"<input type=submit id=btn value=UPDATE name=s2>");
+                out.println("<input type=submit id=btn value=DELETE name=s2>"+"</form>");
             }
             
-//            String s4=request.getParameter("s4");
-//            if(s3.equals("Delete")){               
-//               
-//            }
+            if(s2.equals("DELETE")){
+                String delQuery="delete from \"MaterialTab\" where \"material_name\"='"+DeleteMat+"'";
+                st.executeUpdate(delQuery);
+                out.print("<script language='JavaScript'>alert('Material Deleted');</script>");
+            }
+            
+            if(s2.equals("UPDATE")){
+                String upQuery="update \"MaterialTab\" set \"material_name\"='"+UpdateMatName+"' where \"material_no\"='"+UpdateMatNo+"'";
+                st.executeUpdate(upQuery);
+                out.print("<script language='JavaScript'>alert('Material Table Updated');</script>");
+            }
             
             st.close();
             con.close();

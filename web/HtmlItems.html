@@ -63,11 +63,24 @@ and open the template in the editor.
                 alert(e);
             }
         }
+        
+        function deleteItem(){
+            var delItem=prompt("Enter Item Name");
+            document.form.ditem.value=delItem;
+        }
+        
+        function updateItem(){
+            var upItem=prompt("Enter Item Number");
+            document.form.uitemno.value=upItem;
+            
+            var upItemName=prompt("Upate Item Name To");
+            document.form.uitemname.value=upItemName;
+        }
     </script>
     </head>
     <body>
         <h1 id="EmphasiedText">ITEMS</h1>
-        <form method="POST" action="ServletItems">
+        <form method="POST" action="ServletItems" name="form">
             <br><br><br><br>
             <table align="center" id="Tables">
                 <tr>
@@ -87,6 +100,14 @@ and open the template in the editor.
             <input type="submit" id="btn" value="SAVE" name="s1">
             <input type="submit" id="btn" value="DISPLAY" name="s1">
             <input type="reset" id="btn" value="RESET" name="s1">
+            <br><br><br><br>
+            <input type="submit" id="btn" value="DELETE" name="s1" onclick="deleteItem();"/>
+            <input type="submit" id="btn" value="UPDATE" name="s1" onclick="updateItem();"/>
+            
+            <!--HIDDEN FORM FIELDS -->
+            <input type="hidden" name="ditem">
+            <input type="hidden" name="uitemno">
+            <input type="hidden" name="uitemname">
         </form>
     </body>
 </html>
